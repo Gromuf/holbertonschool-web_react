@@ -1,4 +1,6 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -11,13 +13,13 @@ module.exports = {
   filename: '[name].bundle.js',
   path: path.resolve(__dirname, 'public'),
   },
+  devtool: 'inline-source-map',
   devServer: {
     static: {
       directory: path.resolve(__dirname, 'public'),
     },
     port: 8564,
     open: true,
-    hot: true,
   },
   module: {
     rules: [
@@ -58,4 +60,15 @@ module.exports = {
       },
     ],
   },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'Holberton Dashboard',
+    }),
+  ],
 };

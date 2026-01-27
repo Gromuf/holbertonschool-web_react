@@ -1,0 +1,36 @@
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.App-header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 3px solid #e1003c;
+}
+
+.App-header img {
+  height: 200px;
+  margin-right: 30px;
+};
+
+.App-body {
+  padding: 40px;
+  font-size: 18px;
+}
+
+.App-footer {
+  border-top: 3px solid #e1003c;
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  margin-top: auto;
+}

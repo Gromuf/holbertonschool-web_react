@@ -8,7 +8,7 @@ function App() {
     <>
       <div className="App-header">
         <img src={holbertonLogo} alt="holberton logo" />
-        <h1>School Dashboard</h1>
+        <h1>School dashboard</h1>
       </div>
       <div className="App-body">
         <p>Login to access the full dashboard</p>

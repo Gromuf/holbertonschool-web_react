@@ -3,9 +3,12 @@ import App from './App.jsx';
 
 describe('App Component', () => {
   test('renders the h1 with text School dashboard', () => {
-	render(<App />);
-	const heading = screen.getByRole('heading', { level: 1, name: 'School dashboard' });
-	expect(heading).toBeInTheDocument();
+    render(<App />);
+    const heading = screen.getByRole('heading', {
+      level: 1,
+      name: 'School Dashboard',
+    });
+    expect(heading).toBeInTheDocument();
   });
   test('renders the correct text in body and footer paragraphs', () => {
 	render(<App />);

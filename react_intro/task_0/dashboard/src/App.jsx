@@ -1,13 +1,13 @@
 import './App.css';
-import logo from './assets/holberton-logo.jpg';
+import holbertonLogo from './assets/holberton-logo.jpg';
+
 
 function App() {
   const currentYear = new Date().getFullYear();
-
   return (
-    <div>
+    <>
       <div className="App-header">
-        <img src={logo} alt="holberton logo" />
+        <img src={holbertonLogo} alt="holberton logo" />
         <h1>School dashboard</h1>
       </div>
       <div className="App-body">
@@ -16,7 +16,7 @@ function App() {
       <div className="App-footer">
         <p>Copyright {currentYear} - holberton School</p>
       </div>
-    </div>
+    </>
   );
 }
 

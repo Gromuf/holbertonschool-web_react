@@ -6,7 +6,7 @@ describe('App Component', () => {
     render(<App />);
     const heading = screen.getByRole('heading', {
       level: 1,
-      name: 'School Dashboard',
+      name: 'School dashboard',
     });
     expect(heading).toBeInTheDocument();
   });
@@ -21,5 +21,24 @@ describe('App Component', () => {
 	render(<App />);
 	const logoImage = screen.getByAltText('holberton logo');
 	expect(logoImage).toBeInTheDocument();
+  });
+  test('renders email and password input fields', () => {
+    render(<App />);
+    const emailInput = screen.getByLabelText('email');
+    const passwordInput = screen.getByLabelText('password');
+    expect(emailInput).toBeInTheDocument();
+    expect(passwordInput).toBeInTheDocument();
+  });
+  test('renders email and password labels elements', () => {
+    render(<App />);
+    const emailLabel = screen.getByLabelText('email');
+    const passwordLabel = screen.getByLabelText('password');
+    expect(emailLabel).toBeInTheDocument();
+    expect(passwordLabel).toBeInTheDocument();
+  });
+  test('renders OK button', () => {
+    render(<App />);
+    const okButton = screen.getByText('OK');
+    expect(okButton).toBeInTheDocument();
   });
 });

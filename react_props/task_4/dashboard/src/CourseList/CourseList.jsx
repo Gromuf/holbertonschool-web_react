@@ -3,8 +3,8 @@ import "./CourseList.css";
 
 const CourseList = ({ listCourses = [] }) => {
   return (
-  <>
     <table id="CourseList">
+      {}
       <thead>
         {listCourses.length === 0 ? (
           <CourseListRow textFirstCell="No course available yet" isHeader={true} />
@@ -16,7 +16,7 @@ const CourseList = ({ listCourses = [] }) => {
         )}
       </thead>
       <tbody>
-        {
+        {listCourses.length > 0 &&
           listCourses.map((course) => (
             <CourseListRow
               key={course.id}
@@ -28,7 +28,6 @@ const CourseList = ({ listCourses = [] }) => {
         }
       </tbody>
     </table>
-  </>
   );
 }
 

@@ -32,7 +32,7 @@ function App({ isLoggedIn = false }) {
           <CourseList listCourses={listCourses} />
         )}
       </div>
-      <Footer />
+      <Footer isIndex={true}/>
     </div>
   )
 };

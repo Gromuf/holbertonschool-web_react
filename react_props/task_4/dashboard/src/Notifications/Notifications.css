@@ -7,11 +7,3 @@ button img {
   width: 8px;
   height: 8px;
 }
-
-.notification-items li[data-priority="default"] {
-  color: blue;
-}
-
-.notification-items li[data-priority="urgent"] {
-  color: #e1003c;
-}

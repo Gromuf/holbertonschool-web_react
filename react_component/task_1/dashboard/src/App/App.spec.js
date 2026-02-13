@@ -1,19 +1,12 @@
-import { render, screen, cleanup } from "@testing-library/react";
-import React from "react";
+import { render, screen } from "@testing-library/react";
 import App from "./App.jsx";
-import "@testing-library/jest-dom";
-
-afterEach(() => {
-  cleanup();
-  jest.restoreAllMocks();
-});
 
 describe("App Component", () => {
   test("renders the h1 with text School dashboard", () => {
     render(<App />);
     const heading = screen.getByRole("heading", {
       level: 1,
-      name: /School dashboard/i,
+      name: "School dashboard",
     });
     expect(heading).toBeInTheDocument();
   });
@@ -48,6 +41,12 @@ describe("App Component", () => {
       expect(passwordInput).toBeInTheDocument();
     });
 
+    test("renders 2 label elements with text Email and Password", () => {
+      render(<App isLoggedIn={false} />);
+      expect(screen.getByText(/email/i)).toBeInTheDocument();
+      expect(screen.getByText(/password/i)).toBeInTheDocument();
+    });
+
     test("renders a button with the text OK", () => {
       render(<App isLoggedIn={false} />);
       const button = screen.getByRole("button", { name: /ok/i });
@@ -64,7 +63,9 @@ describe("App Component", () => {
   describe("When isLoggedIn is true", () => {
     test("does not render Login component", () => {
       render(<App isLoggedIn={true} />);
-      const loginText = screen.queryByText("Login to access the full dashboard");
+      const loginText = screen.queryByText(
+        "Login to access the full dashboard",
+      );
       expect(loginText).not.toBeInTheDocument();
     });
 
@@ -72,37 +73,31 @@ describe("App Component", () => {
       render(<App isLoggedIn={true} />);
       const table = screen.getByRole("table");
       expect(table).toBeInTheDocument();
-    });
-  });
-
-  describe("Keyboard Shortcuts", () => {
-    test("calls logOut function once when control and h are pressed", () => {
-      const logOutSpy = jest.fn();
-      render(<App logOut={logOutSpy} />);
-      
-      const event = new KeyboardEvent("keydown", {
-        ctrlKey: true,
-        key: "h",
-        bubbles: true,
-      });
-      window.dispatchEvent(event);
-      
-      expect(logOutSpy).toHaveBeenCalledTimes(1);
+      expect(screen.getByText(/Available courses/i)).toBeInTheDocument();
     });
 
-    test("displays alert with 'Logging you out' when control and h are pressed", () => {
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    test("should call once the logOut function after shortcut", async () => {
+      jest.spyOn(window, "alert").mockImplementation(() => {});
+      const mockProp = jest.fn();
+      const user = userEvent.setup();
+      render(<App isLoggedIn={false} logOut={mockProp} />);
+      await user.keyboard("{Control>}h{/Control}");
+      expect(mockProp.mock.calls).toHaveLength(1);
+    });
+
+    test("should call the alert function with correct text", async () => {
       const alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
-      render(<App />);
-      const event = new KeyboardEvent("keydown", {
-        ctrlKey: true,
-        key: "h",
-        bubbles: true,
-      });
-      window.dispatchEvent(event);
-      
-      expect(alertSpy).toHaveBeenCalledWith("Logging you out");
-      
-      alertSpy.mockRestore();
+      const user = userEvent.setup();
+      const noop = () => {};
+      render(<App isLoggedIn={false} logOut={noop} />);
+      await user.keyboard("{Control>}h{/Control}");
+      expect(alertSpy).toHaveBeenCalledWith(
+        expect.stringMatching(/Logging you out/i),
+      );
     });
   });
 });

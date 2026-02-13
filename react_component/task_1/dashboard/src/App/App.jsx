@@ -7,7 +7,7 @@ import Footer from "../Footer/Footer.jsx";
 import CourseList from "../CourseList/CourseList.jsx";
 import { getLatestNotification } from "../utils/utils";
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
   }
@@ -29,7 +29,7 @@ class App extends React.Component {
       alert("Logging you out");
       this.props.logOut();
     }
-  }
+  };
 
   render() {
     const notifications = [
@@ -51,7 +51,11 @@ class App extends React.Component {
         </div>
         <Header />
         <div className="App-body">
-          {!isLoggedIn ? <Login /> : <CourseList listCourses={listCourses} />}
+          {!this.props.isLoggedIn ? (
+            <Login />
+          ) : (
+            <CourseList listCourses={listCourses} />
+          )}
         </div>
         <Footer isIndex={true} />
       </div>

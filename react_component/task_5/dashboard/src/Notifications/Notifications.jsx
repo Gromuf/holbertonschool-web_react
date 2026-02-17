@@ -1,11 +1,15 @@
 import "./Notifications.css";
-import { Component } from "react";
+import React, { Component } from "react";
 import closeIcon from "../assets/close-button.png";
 import NotificationItem from "./NotificationItem";
 
 class Notifications extends Component {
   constructor(props) {
     super(props);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return nextProps.notifications.length !== this.props.notifications.length;
   }
 
   handleClick = () => {
@@ -67,9 +71,7 @@ class Notifications extends Component {
               </>
             )}
           </>
-        ) : (
-          <></>
-        )}
+        ) : null}
       </>
     );
   }

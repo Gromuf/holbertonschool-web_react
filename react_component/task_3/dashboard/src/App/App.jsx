@@ -6,6 +6,8 @@ import Login from "../Login/Login.jsx";
 import Footer from "../Footer/Footer.jsx";
 import CourseList from "../CourseList/CourseList.jsx";
 import { getLatestNotification } from "../utils/utils";
+import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom.jsx";
+import BodySection from "../BodySection/BodySection.jsx";
 
 class App extends Component {
   constructor(props) {
@@ -52,10 +54,18 @@ class App extends Component {
         <Header />
         <div className="App-body">
           {!this.props.isLoggedIn ? (
+            <BodySectionWithMarginBottom title="Log in to continue">
             <Login />
+          </BodySectionWithMarginBottom>
           ) : (
-            <CourseList listCourses={listCourses} />
+            <BodySectionWithMarginBottom title="Course list">
+              <CourseList listCourses={listCourses} />
+            </BodySectionWithMarginBottom>
+
           )}
+          <BodySection title="News from the School">
+            <p>Holberton School News goes here</p>
+          </BodySection>
         </div>
         <Footer isIndex={true} />
       </div>

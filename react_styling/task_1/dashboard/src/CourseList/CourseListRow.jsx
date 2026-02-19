@@ -5,11 +5,10 @@ const CourseListRow = ({ isHeader = false, textFirstCell = "", textSecondCell = 
   ? "bg-table-header opacity-66"
   : "bg-table-rows opacity-45";
 
-  const cellClasses = "border border-gray-400 pl-2";
+  const cellClasses = "border border-gray-400 pl-2 text-left";
 
 	if (isHeader) {
 		return (
-      <>
         <tr className={rowClasses}>
           {
             textSecondCell === null ? (
@@ -22,7 +21,6 @@ const CourseListRow = ({ isHeader = false, textFirstCell = "", textSecondCell = 
             )
           }
         </tr>
-      </>
     )
   } else {
     return (

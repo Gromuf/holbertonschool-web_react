@@ -1,5 +1,5 @@
 import "./App.css";
-import { Component } from "react";
+import React, { Component } from "react";
 import Notifications from "../Notifications/Notifications.jsx";
 import Header from "../Header/Header.jsx";
 import Login from "../Login/Login.jsx";
@@ -9,10 +9,23 @@ import { getLatestNotification } from "../utils/utils";
 import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom.jsx";
 import BodySection from "../BodySection/BodySection.jsx";
 
+const notifications = [
+  { id: 1, type: "default", value: "New course available" },
+  { id: 2, type: "urgent", value: "New resume available" },
+  { id: 3, type: "urgent", html: { __html: getLatestNotification() } },
+];
+
+const listCourses = [
+  { id: 1, name: "ES6", credit: 60 },
+  { id: 2, name: "Webpack", credit: 20 },
+  { id: 3, name: "React", credit: 40 },
+];
+
 class App extends Component {
   constructor(props) {
     super(props);
   }
+
   static defaultProps = {
     isLoggedIn: false,
     logOut: () => {},
@@ -34,41 +47,32 @@ class App extends Component {
   };
 
   render() {
-    const notifications = [
-      { id: 1, type: "default", value: "New course available" },
-      { id: 2, type: "urgent", value: "New resume available" },
-      { id: 3, type: "urgent", html: { __html: getLatestNotification() } },
-    ];
-
-    const listCourses = [
-      { id: 1, name: "ES6", credit: 60 },
-      { id: 2, name: "Webpack", credit: 20 },
-      { id: 3, name: "React", credit: 40 },
-    ];
+    const { isLoggedIn } = this.props;
 
     return (
-      <div className="App">
-        <div className="root-notifications">
-          <Notifications notifications={notifications} displayDrawer={false} />
+      <React.Fragment>
+        <div className="App">
+          <div className="root-notifications">
+            <Notifications notifications={notifications} displayDrawer={false} />
+          </div>
+          <Header />
+          <div className="App-body">
+            {!isLoggedIn ? (
+              <BodySectionWithMarginBottom title="Log in to continue">
+                <Login />
+              </BodySectionWithMarginBottom>
+            ) : (
+              <BodySectionWithMarginBottom title="Course list">
+                <CourseList listCourses={listCourses} />
+              </BodySectionWithMarginBottom>
+            )}
+            <BodySection title="News from the School">
+              <p>Holberton School News goes here</p>
+            </BodySection>
+          </div>
+          <Footer isIndex={true} />
         </div>
-        <Header />
-        <div className="App-body">
-          {!this.props.isLoggedIn ? (
-            <BodySectionWithMarginBottom title="Log in to continue">
-            <Login />
-          </BodySectionWithMarginBottom>
-          ) : (
-            <BodySectionWithMarginBottom title="Course list">
-              <CourseList listCourses={listCourses} />
-            </BodySectionWithMarginBottom>
-
-          )}
-          <BodySection title="News from the School">
-            <p>Holberton School News goes here</p>
-          </BodySection>
-        </div>
-        <Footer isIndex={true} />
-      </div>
+      </React.Fragment>
     );
   }
 }

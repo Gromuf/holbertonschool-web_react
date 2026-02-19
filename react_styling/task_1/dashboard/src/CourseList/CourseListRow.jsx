@@ -1,31 +1,33 @@
 import React from 'react';
 
 const CourseListRow = ({ isHeader = false, textFirstCell = "", textSecondCell = null }) => {
-  const rowClasses = isHeader
-    ? "bg-table-header/66" 
-    : "bg-table-rows/45";
-
-  const cellClasses = "border border-gray-400 pl-2 text-left";
-
-  return (
-    <tr className={rowClasses}>
-      {isHeader ? (
-        textSecondCell === null ? (
-          <th colSpan="2" className={cellClasses}>{textFirstCell}</th>
-        ) : (
-          <>
-            <th className={cellClasses}>{textFirstCell}</th>
-            <th className={cellClasses}>{textSecondCell}</th>
-          </>
-        )
-      ) : (
-        <>
-          <td className={cellClasses}>{textFirstCell}</td>
-          <td className={cellClasses}>{textSecondCell}</td>
-        </>
-      )}
-    </tr>
-  );
-};
+  if (isHeader) {
+    return (
+      <>
+        <tr className="bg-color-table-header opacity-[66%]">
+          {
+            textSecondCell === null ? (
+              <th className="border border-gray-400" colSpan={2}>{textFirstCell}</th>
+            ) : (
+              <>
+                <th className="border border-gray-400">{textFirstCell}</th>
+                <th className="border border-gray-400">{textSecondCell}</th>
+              </>
+            )
+          }
+        </tr>
+      </>
+    );
+  }else {
+    return (
+      <>
+        <tr className="bg-color-table-rows opacity-[45%]">
+          <td className="border border-gray-400 pl-[8px]">{textFirstCell}</td>
+          <td className="border border-gray-400 pl-[8px]">{textSecondCell}</td>
+        </tr>
+      </>
+    );
+  }
+}
 
 export default CourseListRow;

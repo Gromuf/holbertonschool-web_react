@@ -20,7 +20,7 @@ describe("BodySectionWithMarginBottom Component", () => {
         <p>test child</p>
       </BodySectionWithMarginBottom>,
     );
-    const bodySectionDiv = container.querySelector(".bodySection");
+    const bodySectionDiv = container.querySelector(".w-full");
     const heading = screen.getByRole("heading", {
       level: 2,
       name: /test title/i,

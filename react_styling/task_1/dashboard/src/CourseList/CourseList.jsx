@@ -4,8 +4,8 @@ import WithLogging from '../HOC/WithLogging';
 
 const CourseList = ({ listCourses = [] }) => {
   return (
-    <div className="w-4/5 mx-auto my-8">
-      <table id="CourseList" className="w-full border-collapse">
+    <div className="w-[80%] mx-auto my-8">
+      <table id="CourseList" className="w-full border-collapse border-spacing-0">
         <thead>
           {listCourses.length === 0 ? (
             <CourseListRow textFirstCell="No course available yet" isHeader={true} />

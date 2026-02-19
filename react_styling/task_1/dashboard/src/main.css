@@ -3,9 +3,7 @@
 @theme {
 	--font-roboto: 'Roboto', sans-serif;
 	--color-table-header: #deb5b5;
-	--color-table-rows: #CDCDCD;
-	--opacity-66: 0.66;
-  	--opacity-45: 0.45;
+	--color-table-rows: #cdcdcd;
 }
 
 @layer base {

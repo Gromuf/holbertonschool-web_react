@@ -10,7 +10,7 @@ describe("BodySectionWithMarginBottom Component", () => {
         <p>test child</p>
       </BodySectionWithMarginBottom>,
     );
-    const div = container.querySelector(".bodySectionWithMargin");
+    const div = container.querySelector(".mb-10");
     expect(div).toBeInTheDocument();
   });
 
@@ -21,7 +21,10 @@ describe("BodySectionWithMarginBottom Component", () => {
       </BodySectionWithMarginBottom>,
     );
     const bodySectionDiv = container.querySelector(".bodySection");
-    const heading = screen.getByRole("heading", { level: 2 });
+    const heading = screen.getByRole("heading", {
+      level: 2,
+      name: /test title/i,
+    });
     expect(bodySectionDiv).toBeInTheDocument();
     expect(heading).toHaveTextContent("test title");
     expect(screen.getByText("test child")).toBeInTheDocument();

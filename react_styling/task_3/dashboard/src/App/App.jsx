@@ -1,4 +1,3 @@
-import "./App.css";
 import React, { Component } from "react";
 import Notifications from "../Notifications/Notifications.jsx";
 import Header from "../Header/Header.jsx";

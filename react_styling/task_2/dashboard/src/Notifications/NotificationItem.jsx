@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 
 class NotificationItem extends PureComponent {
   render() {
-    const { type, value, html, markAsRead } = this.props;
+    const { type, value, html, markAsRead, id } = this.props;
     const textColor = type === "urgent"
       ? "text-notification-urgent"
       : "text-notification-default";
 
-    const itemClasses = `${textColor} p-1.5`;
+    const itemClasses = `${textColor} p-[6px] m-0 cursor-pointer`;
 
     if (html) {
       return (
@@ -16,13 +16,17 @@ class NotificationItem extends PureComponent {
           data-notification-type={type}
           className={itemClasses}
           dangerouslySetInnerHTML={html}
-          onClick={() => markAsRead(this.props.id)}
+          onClick={() => markAsRead(id)}
         ></li>
       );
     }
 
     return (
-      <li data-notification-type={type} className={itemClasses} onClick={() => markAsRead(this.props.id)}>
+      <li 
+        data-notification-type={type} 
+        className={itemClasses} 
+        onClick={() => markAsRead(id)}
+      >
         {value}
       </li>
     );

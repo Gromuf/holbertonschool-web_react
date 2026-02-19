@@ -7,10 +7,6 @@ class Notifications extends Component {
     return nextProps.notifications.length !== this.props.notifications.length;
   }
 
-  handleClick = () => {
-    console.log("Close button has been clicked");
-  };
-
   markAsRead = (id) => {
     console.log(`Notification ${id} has been marked as read`);
   };
@@ -23,34 +19,27 @@ class Notifications extends Component {
   render() {
     const { notifications, displayDrawer } = this.props;
     return (
-      <div className="flex flex-col items-end absolute right-0 top-0 p-4">
-        {/* Titre positionné à droite et au-dessus du panneau */}
-        <div className="notification-title mb-2">Your notifications</div>
+      <div className="flex flex-col items-end p-2 absolute right-0 top-0">
+        
+        <div className="notification-title font-bold mb-2">Your notifications</div>
 
         {displayDrawer && (
-          /* w-1/4 = 25% de largeur, border-dashed avec la couleur --main-color */
-          <div className="notification-items border-2 border-dashed border-main w-[25vw] p-2 relative">
+          <div className="notification-items border-2 border-dashed border-main w-[25vw] p-2 relative bg-white">
+            
             <button
               aria-label="Close"
-              style={{
-                position: "absolute",
-                right: "10px",
-                top: "10px",
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-              }}
+              className="absolute right-2 top-2 bg-transparent border-none cursor-pointer outline-none"
               onClick={() => console.log("Close button has been clicked")}
             >
-              <img src={closeIcon} alt="close icon" width="10px" />
+              <img src={closeIcon} alt="close icon" className="w-3 h-3" />
             </button>
 
             {notifications.length === 0 ? (
-              <p>No new notification for now</p>
+              <p className="m-0 p-1.5">No new notification for now</p>
             ) : (
               <>
-                <p>Here is the list of notifications</p>
-                <ul className="list-none p-0">
+                <p className="m-0 p-1.5">Here is the list of notifications</p>
+                <ul className="list-disc pl-8 m-0 p-0">
                   {notifications.map((n) => (
                     <NotificationItem
                       key={n.id}

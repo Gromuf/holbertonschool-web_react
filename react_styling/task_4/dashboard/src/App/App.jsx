@@ -52,7 +52,10 @@ class App extends Component {
       <React.Fragment>
         <div className="App flex flex-col min-h-screen">
           <div className="root-notifications">
-            <Notifications notifications={notifications} displayDrawer={true} />
+            <Notifications
+              notifications={notifications}
+              displayDrawer={false}
+            />
           </div>
           <Header />
           <div className="App-body flex-grow p-4 md:p-12">

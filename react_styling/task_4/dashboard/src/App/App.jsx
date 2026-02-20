@@ -26,7 +26,7 @@ class App extends Component {
   }
 
   static defaultProps = {
-    isLoggedIn: true,
+    isLoggedIn: false,
     logOut: () => {},
   };
 
@@ -54,7 +54,7 @@ class App extends Component {
           <div className="root-notifications">
             <Notifications
               notifications={notifications}
-              displayDrawer={false}
+              displayDrawer={true}
             />
           </div>
           <Header />

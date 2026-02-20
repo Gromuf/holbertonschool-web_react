@@ -20,7 +20,7 @@ class Notifications extends Component {
     const { notifications, displayDrawer } = this.props;
     return (
       <div className="flex flex-col items-end p-2 absolute right-0 top-0 z-50 max-[912px]:w-full max-[912px]:p-0">
-        <div className="notification-title font-bold mb-2 max-[912px]:w-full max-[912px]:bg-white max-[912px]:text-right max-[912px]:pr-4 max-[912px]:m-0 max-[912px]:p-2">
+        <div className="notification-title font-bold mb-2 max-[912px]:w-full max-[912px]:bg-white max-[912px]:text-right max-[912px]:pr-8 max-[912px]:m-0 max-[912px]:py-4">
           Your notifications
         </div>
 

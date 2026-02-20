@@ -5,19 +5,15 @@ function CourseListRow({
   textFirstCell = "",
   textSecondCell = null,
 }) {
-  const rowClasses = isHeader ? "bg-[#debfa366]" : "bg-[#f5f5f5ab]";
+  const rowClasses = isHeader ? "bg-table-header/66" : "bg-table-rows/45";
 
-  const cellClasses = "border border-gray-400 p-2 text-left";
+  const cellClasses = "border border-gray-400";
 
   if (isHeader) {
     return (
       <tr className={rowClasses}>
         {textSecondCell === null ? (
-          <th
-            className={cellClasses}
-            colSpan={2}
-            style={{ textAlign: "center" }}
-          >
+          <th className={cellClasses} colSpan={2}>
             {textFirstCell}
           </th>
         ) : (

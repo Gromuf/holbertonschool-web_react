@@ -12,7 +12,7 @@ class Notifications extends Component {
   };
 
   static defaultProps = {
-    displayDrawer: false,
+    displayDrawer: true,
     notifications: [],
   };
 
@@ -20,9 +20,11 @@ class Notifications extends Component {
     const { notifications, displayDrawer } = this.props;
     return (
       <div className="flex flex-col items-end p-2 absolute right-0 top-0 z-50 max-[912px]:w-full max-[912px]:p-0">
-        <div className="notification-title font-bold mb-2 max-[912px]:w-full max-[912px]:bg-white max-[912px]:text-right max-[912px]:pr-4 max-[912px]:m-0">
-          Your notifications
-        </div>
+        {!displayDrawer && (
+          <div className="notification-title font-bold mb-2 max-[912px]:w-full max-[912px]:bg-white max-[912px]:text-right max-[912px]:pr-4 max-[912px]:m-0">
+            Your notifications
+          </div>
+        )}
         {displayDrawer && (
           <div
             className="notification-items border-2 border-dashed border-main w-[25vw] p-2 relative bg-white 

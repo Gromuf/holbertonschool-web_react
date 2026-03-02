@@ -5,14 +5,16 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
+      email: props.email || "",
+      password: props.password || "",
       enableSubmit: false,
     }
   }
 
   static defaultProps = {
     logIn: () => {},
+    email: "",
+    password: "",
   };
 
   handleChangeEmail = (event) => {

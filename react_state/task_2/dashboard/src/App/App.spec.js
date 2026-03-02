@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App.jsx";
+import React from "react";
 
 describe("App Component", () => {
   test("renders the h1 with text School dashboard", () => {
@@ -24,30 +25,27 @@ describe("App Component", () => {
     expect(logoImage).toBeInTheDocument();
   });
 
-  describe("When isLoggedIn is false", () => {
-    test("renders Login component and not CourseList", () => {
-      render(<App isLoggedIn={false} />);
+  describe("Authentication Flow", () => {
+    test("renders Login component by default (isLoggedIn is false)", () => {
+      render(<App />);
       expect(
-        screen.getByText(/Login to access the full dashboard/i),
+        screen.getByText(/Login to access the full dashboard/i)
       ).toBeInTheDocument();
       expect(screen.queryByRole("table")).not.toBeInTheDocument();
     });
 
-    test("renders login form elements", () => {
-      render(<App isLoggedIn={false} />);
-      expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-      expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: /ok/i })).toBeInTheDocument();
-    });
-  });
-
-  describe("When isLoggedIn is true", () => {
-    test("renders CourseList and not Login component", () => {
-      render(<App isLoggedIn={true} />);
+    test("renders CourseList and hides Login after successful login", () => {
+      render(<App />);
+      const emailInput = screen.getByLabelText(/Email:/i);
+      const passwordInput = screen.getByLabelText(/Password:/i);
+      const submitBtn = screen.getByRole("button", { name: /OK/i });
+      fireEvent.change(emailInput, { target: { value: "test@holberton.com" } });
+      fireEvent.change(passwordInput, { target: { value: "password123" } });
+      fireEvent.click(submitBtn);
       const table = screen.getByRole("table");
       expect(table).toBeInTheDocument();
       expect(
-        screen.queryByText(/Login to access the full dashboard/i),
+        screen.queryByText(/Login to access the full dashboard/i)
       ).not.toBeInTheDocument();
     });
   });
@@ -57,27 +55,24 @@ describe("App Component", () => {
     beforeEach(() => {
       alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
     });
-
     afterEach(() => {
       jest.restoreAllMocks();
     });
 
-    test("should call the logOut function once after pressing Ctrl+H", async () => {
-      const logOutMock = jest.fn();
+    test("should log out and return to login screen after pressing Ctrl+H", async () => {
       const user = userEvent.setup();
-      render(<App isLoggedIn={true} logOut={logOutMock} />);
-      await user.keyboard("{Control>}h{/Control}");
-      expect(logOutMock).toHaveBeenCalledTimes(1);
-    });
-
-    test("should call the alert function with 'Logging you out'", async () => {
-      const logOutMock = jest.fn();
-      const user = userEvent.setup();
-      render(<App isLoggedIn={true} logOut={logOutMock} />);
+      render(<App />);
+      fireEvent.change(screen.getByLabelText(/Email:/i), { target: { value: "test@test.com" } });
+      fireEvent.change(screen.getByLabelText(/Password:/i), { target: { value: "password123" } });
+      fireEvent.click(screen.getByRole("button", { name: /OK/i }));
+      expect(screen.getByRole("table")).toBeInTheDocument();
       await user.keyboard("{Control>}h{/Control}");
       expect(alertSpy).toHaveBeenCalledWith("Logging you out");
+      expect(screen.getByText(/Login to access the full dashboard/i)).toBeInTheDocument();
+      expect(screen.queryByRole("table")).not.toBeInTheDocument();
     });
   });
+
   describe("news from the school section", () => {
     test("renders the news from the school section with correct title and content", () => {
       render(<App />);

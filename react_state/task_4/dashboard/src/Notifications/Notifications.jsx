@@ -3,7 +3,6 @@ import closeIcon from "../assets/close-button.png";
 import NotificationItem from "./NotificationItem";
 
 class Notifications extends PureComponent {
-
   static defaultProps = {
     displayDrawer: true,
     notifications: [],
@@ -11,13 +10,10 @@ class Notifications extends PureComponent {
     handleHideDrawer: () => {},
     markNotificationAsRead: () => {},
   };
-
   render() {
     const { notifications, displayDrawer, handleHideDrawer, handleDisplayDrawer, markNotificationAsRead } = this.props;
-
     const bounceClass =
       notifications.length > 0 && !displayDrawer ? "animate-bounce" : "";
-
     return (
       <div className="flex flex-col items-end p-2 relative md:absolute md:right-0 md:top-0 z-50 max-[912px]:w-full max-[912px]:p-0">
         <div
@@ -26,7 +22,6 @@ class Notifications extends PureComponent {
         >
           Your notifications
         </div>
-
         {displayDrawer && (
           <div
             className="notification-items border-2 border-dashed border-main w-[25vw] p-2 relative bg-white 
@@ -43,11 +38,9 @@ class Notifications extends PureComponent {
                 >
                   <img src={closeIcon} alt="close icon" className="w-4 h-4" />
                 </button>
-
                 <p className="m-0 p-3 max-[912px]:mt-10">
                   Here is the list of notifications
                 </p>
-
                 <ul className="list-disc pl-8 m-0 p-0 max-[912px]:list-none max-[912px]:p-0 max-[912px]:[&>li]:border-b max-[912px]:[&>li]:border-black max-[912px]:[&>li]:p-3">
                   {notifications.map((n) => (
                     <NotificationItem

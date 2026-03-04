@@ -1,6 +1,6 @@
 import { getCurrentYear, getFooterCopy } from "../utils/utils.js";
 import AppContext from "../Context/context";
-import { useContext } from "react";
+import React, { useContext } from "react";
 
 const Footer = () => {
   const { user } = useContext(AppContext);

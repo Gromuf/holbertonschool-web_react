@@ -1,7 +1,7 @@
 import WithLogging from "../HOC/WithLogging";
 import React, { useState } from "react";
 
-const Login = ({ logIn = () => {}, email: initialEmail = "", password: initialPassword }) => {
+const Login = ({ logIn = () => {}, email: initialEmail = "", password: initialPassword = "" }) => {
   const [enableSubmit, setEnableSubmit] = useState(false);
   const [formData, setFormData] = useState({
     email: initialEmail,
@@ -10,7 +10,7 @@ const Login = ({ logIn = () => {}, email: initialEmail = "", password: initialPa
 
   const validateForm = (email, password) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email) && password.length >= 8;
+    return emailRegex.test(email) && (password ? password.length >= 8 : false);
   };
 
   const handleChangeEmail = (event) => {
@@ -25,8 +25,6 @@ const Login = ({ logIn = () => {}, email: initialEmail = "", password: initialPa
     setEnableSubmit(validateForm(formData.email, password));
   };
 
-  
-
   const handleLoginSubmit = (event) => {
     event.preventDefault();
     logIn(formData.email, formData.password);
@@ -35,15 +33,15 @@ const Login = ({ logIn = () => {}, email: initialEmail = "", password: initialPa
   return (
       <div className="h-full mt-5 md:ml-5 pt-5 border-t-2 border-main">
         <p className="mb-4">Login to access the full dashboard</p>
-        <form onSubmit={this.handleLoginSubmit}>
+        <form onSubmit={handleLoginSubmit} className="w-full">
           <div className="flex flex-col md:flex-row md:items-center gap-4 items-start">
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full md:w-auto">
               <label htmlFor="email">Email:</label>
               <input
                 type="email"
                 id="email"
-                value={email}
-                onChange={this.handleChangeEmail}
+                value={formData.email}
+                onChange={handleChangeEmail}
                 className="border border-gray-400 rounded px-2 py-1 w-full md:w-auto focus:outline-main"
               />
             </div>
@@ -52,8 +50,8 @@ const Login = ({ logIn = () => {}, email: initialEmail = "", password: initialPa
               <input
                 type="password"
                 id="password"
-                value={password}
-                onChange={this.handleChangePassword}
+                value={formData.password}
+                onChange={handleChangePassword}
                 className="border border-gray-400 rounded px-2 py-1 w-full md:w-auto focus:outline-main"
               />
             </div>

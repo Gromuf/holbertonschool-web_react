@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import Notifications from "../Notifications/Notifications.jsx";
 import Header from "../Header/Header.jsx";
 import Login from "../Login/Login.jsx";
@@ -58,10 +58,13 @@ const App = () => {
     );
   }, []);
 
-  const contextValue = {
-    user,
-    logOut,
-  };
+  const contextValue = useMemo(
+    () => ({
+      user,
+      logOut,
+    }),
+    [user, logOut],
+  );
 
   return (
     <AppContext.Provider value={contextValue}>

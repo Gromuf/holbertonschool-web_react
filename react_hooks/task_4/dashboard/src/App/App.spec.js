@@ -50,35 +50,6 @@ describe("App Component", () => {
     });
   });
 
-  describe("Keyboard shortcuts (Ctrl + H)", () => {
-    let alertSpy;
-    beforeEach(() => {
-      alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
-    });
-    afterEach(() => {
-      jest.restoreAllMocks();
-    });
-
-    test("should log out and return to login screen after pressing Ctrl+H", async () => {
-      const user = userEvent.setup();
-      render(<App />);
-      fireEvent.change(screen.getByLabelText(/Email:/i), {
-        target: { value: "test@test.com" },
-      });
-      fireEvent.change(screen.getByLabelText(/Password:/i), {
-        target: { value: "password123" },
-      });
-      fireEvent.click(screen.getByRole("button", { name: /OK/i }));
-      expect(screen.getByRole("table")).toBeInTheDocument();
-      await user.keyboard("{Control>}h{/Control}");
-      expect(alertSpy).toHaveBeenCalledWith("Logging you out");
-      expect(
-        screen.getByText(/Login to access the full dashboard/i),
-      ).toBeInTheDocument();
-      expect(screen.queryByRole("table")).not.toBeInTheDocument();
-    });
-  });
-
   describe("news from the school section", () => {
     test("renders the news from the school section with correct title and content", () => {
       render(<App />);

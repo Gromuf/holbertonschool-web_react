@@ -27,13 +27,13 @@ const App = () => {
   const [notifications, setNotifications] = useState(notificationsList);
   const [listCourses] = useState(listCoursesData);
 
-  const handleDisplayDrawer = () => {
+  const handleDisplayDrawer = useCallback(() => {
     setDisplayDrawer(true);
-  };
+  }, []);
 
-  const handleHideDrawer = () => {
+  const handleHideDrawer = useCallback(() => {
     setDisplayDrawer(false);
-  };
+  }, []);
 
   const logIn = useCallback((email, password) => {
     setUser({

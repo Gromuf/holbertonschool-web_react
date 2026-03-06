@@ -22,9 +22,10 @@ const initialCoursesList = [
 ];
 
 const App = () => {
-  const [displayDrawer, setDisplayDrawer] = useState(true);
+  const [displayDrawer, setDisplayDrawer] = useState(false);
   const [user, setUser] = useState(initialUser);
-  const [listNotifications, setListNotifications] = useState(initialNotifications);
+  const [listNotifications, setListNotifications] =
+    useState(initialNotifications);
   const [listCourses] = useState(initialCoursesList);
 
   const handleDisplayDrawer = () => {

@@ -1,9 +1,13 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import mockAxios from "jest-mock-axios";
 import App from "./App.jsx";
 import React from "react";
 
 describe("App Component", () => {
+  afterEach(() => {
+    mockAxios.reset();
+  });
+
   test("renders the h1 with text School dashboard", () => {
     render(<App />);
     const heading = screen.getByRole("heading", {
@@ -34,15 +38,25 @@ describe("App Component", () => {
       expect(screen.queryByRole("table")).not.toBeInTheDocument();
     });
 
-    test("renders CourseList and hides Login after successful login", () => {
+    test("renders CourseList and hides Login after successful login", async () => {
       render(<App />);
+
       const emailInput = screen.getByLabelText(/Email:/i);
       const passwordInput = screen.getByLabelText(/Password:/i);
       const submitBtn = screen.getByRole("button", { name: /OK/i });
+
       fireEvent.change(emailInput, { target: { value: "test@holberton.com" } });
       fireEvent.change(passwordInput, { target: { value: "password123" } });
       fireEvent.click(submitBtn);
-      const table = screen.getByRole("table");
+
+      mockAxios.mockResponse({
+        data: [
+          { id: 1, name: "ES6", credit: 60 },
+          { id: 2, name: "Webpack", credit: 20 },
+        ],
+      });
+
+      const table = await screen.findByRole("table");
       expect(table).toBeInTheDocument();
       expect(
         screen.queryByText(/Login to access the full dashboard/i),
@@ -64,25 +78,42 @@ describe("App Component", () => {
   });
 
   describe("Notifications State Management", () => {
-    test("clicking on a notification item removes it and logs the correct message", () => {
+    test("clicking on a notification item removes it and logs the correct message", async () => {
       const consoleSpy = jest
         .spyOn(console, "log")
         .mockImplementation(() => {});
+
       render(<App />);
+
+      mockAxios.mockResponse({
+        data: [
+          { id: 1, type: "default", value: "New course available" },
+          { id: 2, type: "urgent", value: "New resume available" },
+        ],
+      });
+
       const menuTitle = screen.getByText(/Your notifications/i);
       fireEvent.click(menuTitle);
-      const notificationItems = screen.getAllByRole("listitem");
+
+      const notificationItems = await screen.findAllByRole("listitem");
       const initialCount = notificationItems.length;
       const firstNotification = notificationItems[0];
+
       fireEvent.click(firstNotification);
+
       expect(consoleSpy).toHaveBeenCalledWith(
         "Notification 1 has been marked as read",
       );
-      const updatedItems = screen.getAllByRole("listitem");
-      expect(updatedItems.length).toBe(initialCount - 1);
+
+      await waitFor(() => {
+        const updatedItems = screen.getAllByRole("listitem");
+        expect(updatedItems.length).toBe(initialCount - 1);
+      });
+
       expect(
         screen.queryByText(/New course available/i),
       ).not.toBeInTheDocument();
+
       consoleSpy.mockRestore();
     });
   });

@@ -18,7 +18,7 @@ const Login = ({ logIn = () => {} }) => {
       <form onSubmit={handleLoginSubmit} className="w-full">
         <div className="flex flex-col md:flex-row md:items-center gap-4 items-start">
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full md:w-auto">
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
@@ -28,7 +28,7 @@ const Login = ({ logIn = () => {} }) => {
             />
           </div>
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full md:w-auto">
-            <label htmlFor="password">Password:</label>
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"

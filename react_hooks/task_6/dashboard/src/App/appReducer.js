@@ -8,7 +8,7 @@ export const APP_ACTIONS = {
 };
 
 export const initialState = {
-  displayDrawer: false,
+  displayDrawer: true,
   user: {
     email: "",
     password: "",
@@ -32,9 +32,7 @@ export const appReducer = (state = initialState, action) => {
       return {
         ...state,
         user: {
-          email: "",
-          password: "",
-          isLoggedIn: false,
+          ...initialState.user,
         },
       };
     case APP_ACTIONS.TOGGLE_DRAWER:

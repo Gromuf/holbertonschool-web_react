@@ -10,13 +10,13 @@ const initialState = {
 const API_BASE_URL = "http://localhost:5173";
 
 const ENDPOINTS = {
-  NOTIFICATIONS: `${API_BASE_URL}/notifications.json`,
+  notifications: `${API_BASE_URL}/notifications.json`,
 };
 
 export const fetchNotifications = createAsyncThunk(
   "notifications/fetchNotifications",
   async () => {
-    const response = await axios.get(ENDPOINTS.NOTIFICATIONS);
+    const response = await axios.get(ENDPOINTS.notifications);
     const data = response.data;
     const updatedNotifications = data.map((notification) => {
       if (notification.id === 3) {

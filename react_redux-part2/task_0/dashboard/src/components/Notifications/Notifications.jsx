@@ -69,14 +69,10 @@ const styles = StyleSheet.create({
   button: {
     position: "absolute",
     cursor: "pointer",
-    right: "calc(0% - 480px)",
-    top: "calc(0% - 480px)",
+    right: "10px",
+    top: "10px",
     background: "transparent",
-    transform: "scale(0.012)",
-    WebkitTransform: "scale(0.012)",
-    MozTransform: "scale(0.012)",
-    msTransform: "scale(0.012)",
-    OTransform: "scale(0.012)",
+    border: "none",
   },
   menuItem: {
     float: "right",
@@ -101,9 +97,11 @@ const Notifications = memo(function Notifications() {
   const handleToggleDrawer = (show) => {
     if (drawerRef.current) {
       if (show) {
-        drawerRef.current.classList.add(css(styles.visible));
+        drawerRef.current.style.opacity = "1";
+        drawerRef.current.style.visibility = "visible";
       } else {
-        drawerRef.current.classList.remove(css(styles.visible));
+        drawerRef.current.style.opacity = "0";
+        drawerRef.current.style.visibility = "hidden";
       }
     }
   };
@@ -128,7 +126,7 @@ const Notifications = memo(function Notifications() {
               aria-label="Close"
               className={css(styles.button)}
             >
-              <img src={closeIcon} alt="close icon" className={css(styles.closeIconImg)} />
+              <img src={closeIcon} alt="close icon" width="15px" />
             </button>
             <ul className={css(styles.ul)}>
               {notifications.map((notification) => (

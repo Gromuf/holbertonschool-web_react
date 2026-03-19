@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
   row: {
     backgroundColor: "#f5f5f5ab",
   },
+  rowChecked: { backgroundColor: "#e6e4e4" },
 });
 
 export default function CourseListRow({
@@ -18,6 +19,7 @@ export default function CourseListRow({
   onChangeRow = () => {},
 }) {
   const rowStyle = isHeader ? styles.headerRow : styles.row;
+  const selectedStyle = isSelected ? styles.rowChecked : null;
 
   return isHeader ? (
     <tr className={css(rowStyle)}>

@@ -1,4 +1,4 @@
-import { memo, useRef, useCallback } from "react";
+import React, { memo, useRef, useCallback } from "react";
 import { StyleSheet, css } from "aphrodite";
 import closeIcon from "../../assets/close-icon.png";
 import NotificationItem from "../NotificationItem/NotificationItem";

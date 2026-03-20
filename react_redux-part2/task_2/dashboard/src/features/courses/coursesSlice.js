@@ -13,10 +13,14 @@ const ENDPOINTS = {
 };
 
 export const fetchCourses = createAsyncThunk(
-  "courses/fetchCourses",
+  'courses/fetchCourses',
   async () => {
     const response = await axios.get(ENDPOINTS.courses);
-    return response.data;
+    const data = response.data.courses || response.data;
+    const courses = data.map((course) => {
+      return course;
+    });
+    return courses;
   },
 );
 

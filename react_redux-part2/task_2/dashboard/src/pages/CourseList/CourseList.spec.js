@@ -1,8 +1,9 @@
-import { render, screen, fireEvent } from "@testing-library/react"; // Ajout de fireEvent
+import { render, screen, fireEvent } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import CourseList from "./CourseList";
 import coursesReducer from "../../features/courses/coursesSlice";
+import "@testing-library/jest-dom";
 
 const renderWithRedux = (preloadedState) => {
   const store = configureStore({
@@ -44,7 +45,7 @@ describe("CourseList Component", () => {
     expect(checkboxes).toHaveLength(3);
   });
 
-  test("it should dispatch selectCourse when a checkbox is clicked", () => {
+  test("it should dispatch selectCourse and update state when a checkbox is clicked", () => {
     const { store } = renderWithRedux(initialState);
     const checkboxes = screen.getAllByRole("checkbox");
     const firstCheckbox = checkboxes[0];
@@ -55,15 +56,15 @@ describe("CourseList Component", () => {
   });
 
   test("it should render the CourseList component with 1 row when courses array is empty", () => {
-    const state = {
+    const emptyState = {
       courses: {
         courses: [],
       },
     };
-    renderWithRedux(state);
+    renderWithRedux(emptyState);
     const rowElements = screen.getAllByRole("row");
-    const rowText = screen.getByText(/No course available yet/i);
     expect(rowElements).toHaveLength(1);
-    expect(rowText).toBeInTheDocument();
+    const emptyMessage = screen.getByText(/No course available yet/i);
+    expect(emptyMessage).toBeInTheDocument();
   });
 });

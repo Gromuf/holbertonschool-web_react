@@ -17,12 +17,12 @@ export const fetchNotifications = createAsyncThunk(
   "notifications/fetchNotifications",
   async () => {
     const response = await axios.get(ENDPOINTS.notifications);
-    const data = response.data;
+    const data = response.data.notifications || response.data;
     const updatedNotifications = data.map((notification) => {
       if (notification.id === 3) {
         return {
           ...notification,
-          value: getLatestNotification(),
+          html: { __html: getLatestNotification() },
         };
       }
       return notification;
@@ -37,7 +37,7 @@ const notificationsSlice = createSlice({
   reducers: {
     markNotificationAsRead: (state, action) => {
       const notificationId = action.payload;
-      console.log(notificationId);
+      console.log(`Marking notification ${notificationId} as read`);
       state.notifications = state.notifications.filter(
         (notification) => notification.id !== notificationId,
       );

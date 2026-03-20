@@ -25,7 +25,7 @@ describe("Notifications component", () => {
   test("toggles visibility styles when clicking menu item and close button", () => {
     const { container } = renderWithRedux({
       notifications: {
-        notifications: [{ id: 1, type: "default", value: "Test" }],
+        notifications: [{ id: 1, type: "default", html: { __html: "Test" } }],
       },
     });
 
@@ -45,7 +45,9 @@ describe("Notifications component", () => {
   test("dispatches markNotificationAsRead when item is clicked", async () => {
     const { store } = renderWithRedux({
       notifications: {
-        notifications: [{ id: 42, type: "default", value: "Click me" }],
+        notifications: [
+          { id: 42, type: "default", html: { __html: "Click me" } },
+        ],
       },
     });
     const spy = jest.spyOn(store, "dispatch");

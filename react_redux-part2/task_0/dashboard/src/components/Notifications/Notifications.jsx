@@ -94,23 +94,29 @@ const Notifications = memo(function Notifications() {
   const dispatch = useDispatch();
   const drawerRef = useRef(null);
 
-  const handleToggleDrawer = (show) => {
-    if (drawerRef.current) {
-      if (show) {
-        drawerRef.current.style.opacity = "1";
-        drawerRef.current.style.visibility = "visible";
-      } else {
-        drawerRef.current.style.opacity = "0";
-        drawerRef.current.style.visibility = "hidden";
-      }
+  const handleToggleDrawer = useCallback(() => {
+    const el = drawerRef.current;
+    if (!el) return;
+    const visibleClass = css(styles.visible);
+    if (el.classList.contains(visibleClass)) {
+      el.classList.remove(visibleClass);
+    } else {
+      el.classList.add(visibleClass);
     }
-  };
+  }, []);
+
+  const handleMarkNotificationAsRead = useCallback(
+    (id) => {
+      dispatch(markNotificationAsRead(id));
+    },
+    [dispatch],
+  );
       
   return (
     <>
       <div
         className={css(styles.menuItem)}
-        onClick={() => handleToggleDrawer(true)}
+        onClick={handleToggleDrawer}
       >
         Your notifications
       </div>
@@ -122,7 +128,7 @@ const Notifications = memo(function Notifications() {
           <>
             <p className={css(styles.p)}>Here is the list of notifications</p>
             <button
-              onClick={() => handleToggleDrawer(false)}
+              onClick={handleToggleDrawer}
               aria-label="Close"
               className={css(styles.button)}
             >
@@ -136,7 +142,7 @@ const Notifications = memo(function Notifications() {
                   type={notification.type}
                   value={notification.value}
                   html={notification.html}
-                  markAsRead={() => dispatch(markNotificationAsRead(notification.id))}
+                  markAsRead={handleMarkNotificationAsRead}
                 />
               ))}
             </ul>

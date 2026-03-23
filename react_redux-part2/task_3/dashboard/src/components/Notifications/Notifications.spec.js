@@ -2,11 +2,9 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import Notifications from "./Notifications";
-import notificationsReducer, {
-  markNotificationAsRead,
-} from "../../features/notifications/notificationsSlice";
-
-const renderWithRedux = (preloadedState = {}) => {
+import notificationsReducer from "../../features/notifications/notificationsSlice";
+import * as actions from "../../features/notifications/notificationsSlice";
+const renderWithRedux = (preloadedState) => {
   const store = configureStore({
     reducer: { notifications: notificationsReducer },
     preloadedState,
@@ -20,7 +18,6 @@ const renderWithRedux = (preloadedState = {}) => {
     store,
   };
 };
-
 describe("Notifications component", () => {
   test("toggles visibility styles when clicking menu item and close button", () => {
     const { container } = renderWithRedux({
@@ -38,24 +35,23 @@ describe("Notifications component", () => {
     fireEvent.click(closeButton);
     expect(drawer.className).not.toContain("visible");
   });
-
   test("dispatches markNotificationAsRead when item is clicked", async () => {
     const testId = "5debd764507712e7a1307303";
-    const { store } = renderWithRedux({
+    const spy = jest.spyOn(actions, "markNotificationAsRead");
+    renderWithRedux({
       notifications: {
         notifications: [{ id: testId, type: "default", value: "Click me" }],
         loading: false,
       },
     });
     fireEvent.click(screen.getByText(/your notifications/i));
-    const spy = jest.spyOn(store, "dispatch");
     const item = screen.getByText("Click me");
     fireEvent.click(item);
     await waitFor(() => {
-      expect(spy).toHaveBeenCalledWith(markNotificationAsRead(testId));
+      expect(spy).toHaveBeenCalledWith(testId);
     });
+    spy.mockRestore();
   });
-
   test("filters notifications correctly when clicking filter buttons", () => {
     renderWithRedux({
       notifications: {
@@ -67,12 +63,10 @@ describe("Notifications component", () => {
       },
     });
     fireEvent.click(screen.getByText(/your notifications/i));
-    const urgentBtn = screen.getByRole("button", { name: /urgent/i });
-    fireEvent.click(urgentBtn);
+    fireEvent.click(screen.getByRole("button", { name: /urgent/i }));
     expect(screen.getByText("Urgent one")).toBeInTheDocument();
     expect(screen.queryByText("Normal one")).not.toBeInTheDocument();
-    const defaultBtn = screen.getByRole("button", { name: /default/i });
-    fireEvent.click(defaultBtn);
+    fireEvent.click(screen.getByRole("button", { name: /default/i }));
     expect(screen.getByText("Normal one")).toBeInTheDocument();
     expect(screen.getByText("Urgent one")).toBeInTheDocument();
   });

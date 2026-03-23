@@ -159,6 +159,7 @@ const Notifications = memo(function Notifications() {
                   {filteredNotifications.map((notification) => (
                     <NotificationItem
                       key={notification.id}
+                      id={notification.id}
                       type={notification.type}
                       value={notification.value}
                       html={notification.html}
